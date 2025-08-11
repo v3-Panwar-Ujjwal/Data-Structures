@@ -12,7 +12,7 @@ void delete(int *, int, int *);
 void delete_from_start(int *, int *);
 void delete_from_end(int *, int *);
 void print(int *, int);
-int access_element(int *, int, int *);
+void access_element(int *, int, int *);
 
 int main() {
 
@@ -20,24 +20,9 @@ int main() {
 
   int count = 0;
 
-  /*
-   * Array menu for now.
-  printf("=========== Array interface ============\n");
-  printf("1. Insert an element at start of the array\n");
-  printf("2. Insert an element at the end of the array\n");
-  printf("3. Insert an element at index i in the array\n");
-  printf("4. Delete an element from the end of the array\n");
-  printf("5. Delete an element from the start of the array\n");
-  printf("6. Delete an elemenent at index i in the array\n");
-  printf("7. Return the count of the elements in the array\n");
-  printf("8. Print the current array\n");
-  printf("9. Access the element at index i\n");
-   */
   insert_at_end(arr, 1, &count);
   insert_at_end(arr, 2, &count);
   insert_at_end(arr, 3, &count);
-  insert_at_end(arr, 4, &count);
-  insert_at_end(arr, 5, &count);
   print(arr, count);
   delete(arr, 4, &count);
   print(arr, count);
@@ -100,20 +85,16 @@ bool validate_index_delete(int i, int count) {
 }
 
 void delete(int *arr, int i, int *count) {
-
   if (!validate_index_delete(i, *count)) {
     return;
   }
-
   // If count is greater than or equal to zero there is element in list
   if (*count > 0) {
     // Till count-1 as we dont want garbage there after 1 element is removed
     // Now list is count - 1 length
     for (; i < *count - 1; i++) {
-      // Copy element at i+1 index to current index
       arr[i] = arr[i + 1];
     }
-    // Reduce count after removal of the element
     (*count)--;
   } else {
     printf("List is empty, Can't remove any elements");
@@ -128,12 +109,12 @@ void delete_from_end(int *arr, int *count) { delete(arr, *count, count); };
 void print(int *arr, int count) {
   int i;
   for (i = 0; i < count; i++) {
-    printf("%d ", *(arr + i));
+    printf("%d ", arr[i]);
   }
   printf("\n");
 };
 
-int access_element(int *arr, int i, int *count) {
+void access_element(int *arr, int i, int *count) {
   if (validate_index_delete(i, *count))
-    return arr[i];
+    printf("%d", arr[i]);
 }
