@@ -40,15 +40,16 @@ bool validate_index_insert(int i, int count) {
   if (i >= 0 && i <= count) {
     return true;
   }
-  printf("Cant't Insert. Invalid values for i, either i is less than "
-         "array length or "
-         "greater than the defined size \n");
+
   return false;
 }
 
 void insert(int *arr, int n, int i, int *count) {
 
   if (!validate_index_insert(i, *count)) {
+    printf("Cant't Insert. Invalid values for i, either i is less than "
+           "array length or "
+           "greater than the defined size \n");
     return;
   }
 
@@ -82,14 +83,14 @@ bool validate_index_delete(int i, int count) {
   if (i >= 0 && i < count) {
     return true;
   }
-  printf("Cant't Remove. Invalid values for i, either i is less than "
-         "array length or "
-         "greater than the defined size \n");
   return false;
 }
 
 void delete(int *arr, int i, int *count) {
   if (!validate_index_delete(i, *count)) {
+    printf("Cant't Remove. Invalid values for i, either i is less than "
+           "array length or "
+           "greater than the defined size \n");
     return;
   }
   // If count is greater than or equal to zero there is element in list
@@ -121,4 +122,8 @@ void print(int *arr, int count) {
 void access_element(int *arr, int i, int *count) {
   if (validate_index_delete(i, *count))
     printf("%d", arr[i]);
+  else
+    printf("Cant't access element. Invalid values for i, either i is less than "
+           "array length or "
+           "greater than the defined size \n");
 }
