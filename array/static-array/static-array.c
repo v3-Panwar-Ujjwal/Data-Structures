@@ -23,8 +23,12 @@ int main() {
   insert_at_end(arr, 1, &count);
   insert_at_end(arr, 2, &count);
   insert_at_end(arr, 3, &count);
+  insert_at_end(arr, 4, &count);
+  insert_at_end(arr, 5, &count);
+  // 1 2 3 4 5
   print(arr, count);
   delete(arr, 4, &count);
+  // 1 2 3 4
   print(arr, count);
 }
 
