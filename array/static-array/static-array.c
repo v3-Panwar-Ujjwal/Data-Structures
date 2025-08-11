@@ -3,7 +3,8 @@
 
 #define MAX_SIZE 10
 
-bool validate_index(int, int);
+bool validate_index_insert(int, int);
+bool validate_index_delete(int, int);
 void insert(int *, int, int, int *);
 void insert_at_start(int *, int, int *);
 void insert_at_end(int *, int, int *);
@@ -11,13 +12,13 @@ void delete(int *, int, int *);
 void delete_from_start(int *, int *);
 void delete_from_end(int *, int *);
 void print(int *, int);
-void access_element(int *, int);
+int access_element(int *, int, int *);
 
 int main() {
 
-  int arr[MAX_SIZE];
+  int arr[MAX_SIZE] = {0};
 
-  int count = -1;
+  int count = 0;
 
   /*
    * Array menu for now.
@@ -35,45 +36,37 @@ int main() {
   insert_at_end(arr, 1, &count);
   insert_at_end(arr, 2, &count);
   insert_at_end(arr, 3, &count);
-  insert(arr, 4, 2, &count);
-  insert(arr, 5, 3, &count);
-  insert(arr, 6, 5, &count);
+  insert_at_end(arr, 4, &count);
+  insert_at_end(arr, 5, &count);
   print(arr, count);
-  delete(arr, 3, &count);
-  print(arr, count);
-  delete(arr, 3, &count);
-  print(arr, count);
-  delete_from_end(arr, &count);
-  delete(arr, 2, &count);
+  delete(arr, 4, &count);
   print(arr, count);
 }
 
-bool validate_index(int i, int count) {
+bool validate_index_insert(int i, int count) {
   /*
    * Validating the index i
-   * If index is greater than or equal to count or greater than MAX_SIZE or less
-   * than 0 Return with an error
+   * 0 <= i <= count return true
    */
-  if (i > count || i > MAX_SIZE || i < 0) {
-    printf("Cant't Insert/Remove. Invalid values for i, either i is less than "
-           "array "
-           "length or "
-           "greater than the defined size \n");
-    return false;
+  if (i >= 0 && i <= count) {
+    return true;
   }
-  return true;
+  printf("Cant't Insert. Invalid values for i, either i is less than "
+         "array length or "
+         "greater than the defined size \n");
+  return false;
 }
 
 void insert(int *arr, int n, int i, int *count) {
 
-  if (!validate_index(i, *count)) {
+  if (!validate_index_insert(i, *count)) {
     return;
   }
 
   if ((*count) < MAX_SIZE) {
     // If the list is not full
     int index;
-    for (index = (*count) + 1; index > i; index--) {
+    for (index = (*count); index > i; index--) {
       // Copy element of current index to index + 1;
       arr[index] = arr[index - 1];
     }
@@ -92,15 +85,31 @@ void insert_at_end(int *arr, int n, int *count) {
   insert(arr, n, *count, count);
 }
 
+bool validate_index_delete(int i, int count) {
+  /*
+   * Validating the index i
+   * 0 <= i < count return true
+   */
+  if (i >= 0 && i < count) {
+    return true;
+  }
+  printf("Cant't Remove. Invalid values for i, either i is less than "
+         "array length or "
+         "greater than the defined size \n");
+  return false;
+}
+
 void delete(int *arr, int i, int *count) {
 
-  if (!validate_index(i, *count)) {
+  if (!validate_index_delete(i, *count)) {
     return;
   }
 
   // If count is greater than or equal to zero there is element in list
-  if (*count >= 0) {
-    for (; i < *count; i++) {
+  if (*count > 0) {
+    // Till count-1 as we dont want garbage there after 1 element is removed
+    // Now list is count - 1 length
+    for (; i < *count - 1; i++) {
       // Copy element at i+1 index to current index
       arr[i] = arr[i + 1];
     }
@@ -123,3 +132,8 @@ void print(int *arr, int count) {
   }
   printf("\n");
 };
+
+int access_element(int *arr, int i, int *count) {
+  if (validate_index_delete(i, *count))
+    return arr[i];
+}
