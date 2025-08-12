@@ -11,7 +11,7 @@ void insert_at_end(int *, int, int *);
 void delete(int *, int, int *);
 void delete_from_start(int *, int *);
 void delete_from_end(int *, int *);
-void print(int *, int);
+void print(const int *, int);
 void access_element(int *, int, int *);
 
 int main() {
@@ -27,7 +27,7 @@ int main() {
   insert_at_end(arr, 5, &count);
   // 1 2 3 4 5
   print(arr, count);
-  delete(arr, 4, &count);
+  delete_from_end(arr, &count);
   // 1 2 3 4
   print(arr, count);
 }
@@ -67,7 +67,7 @@ void insert(int *arr, int n, int i, int *count) {
     printf("List is full, can't insert any more elements\n");
     return;
   }
-};
+}
 
 void insert_at_start(int *arr, int n, int *count) { insert(arr, n, 0, count); }
 
@@ -88,7 +88,7 @@ bool validate_index_delete(int i, int count) {
 
 void delete(int *arr, int i, int *count) {
   if (!validate_index_delete(i, *count)) {
-    printf("Cant't Remove. Invalid values for i, either i is less than "
+    printf("Can't Remove. Invalid values for i, either i is less than "
            "array length or "
            "greater than the defined size \n");
     return;
@@ -105,25 +105,25 @@ void delete(int *arr, int i, int *count) {
     printf("List is empty, Can't remove any elements");
     return;
   }
-};
+}
 
-void delete_from_start(int *arr, int *count) { delete(arr, 0, count); };
+void delete_from_start(int *arr, int *count) { delete(arr, 0, count); }
 
-void delete_from_end(int *arr, int *count) { delete(arr, *count, count); };
+void delete_from_end(int *arr, int *count) { delete(arr, *count - 1, count); }
 
-void print(int *arr, int count) {
+void print(const int *arr, int count) {
   int i;
   for (i = 0; i < count; i++) {
     printf("%d ", arr[i]);
   }
   printf("\n");
-};
+}
 
 void access_element(int *arr, int i, int *count) {
   if (validate_index_delete(i, *count))
     printf("%d", arr[i]);
   else
-    printf("Cant't access element. Invalid values for i, either i is less than "
+    printf("Can't access element. Invalid values for i, either i is less than "
            "array length or "
            "greater than the defined size \n");
 }
